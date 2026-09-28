@@ -1,17 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Identitas Agung</title>
+    <title>Identitas Agung | Music</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             min-height: 100vh;
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #172554, #1d4ed8);
+            background:
+                radial-gradient(circle at top, #7c3aed 0%, transparent 35%),
+                linear-gradient(135deg, #090014, #1a0033, #0f172a);
             color: white;
             display: flex;
             justify-content: center;
@@ -22,48 +27,125 @@
             width: 450px;
             padding: 40px;
             text-align: center;
-            background: #1e3a8a;
-            border: 2px solid #60a5fa;
+            background: rgba(20, 10, 40, 0.95);
+            border: 2px solid #a855f7;
             border-radius: 25px;
-            box-shadow: 0 0 30px rgba(96,165,250,0.3);
+            box-shadow:
+                0 0 20px rgba(168, 85, 247, 0.5),
+                0 0 50px rgba(236, 72, 153, 0.2);
         }
 
         .icon {
             font-size: 70px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 12px #d946ef);
         }
 
         h1 {
-            color: #93c5fd;
+            color: #e879f9;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(232, 121, 249, 0.7);
+        }
+
+        .equalizer {
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            gap: 6px;
+            margin-bottom: 25px;
+        }
+
+        .bar {
+            width: 7px;
+            border-radius: 10px;
+            background: linear-gradient(#d946ef, #8b5cf6);
+            animation: music 1s infinite ease-in-out;
+        }
+
+        .bar:nth-child(1) {
+            height: 20px;
+            animation-delay: 0.1s;
+        }
+
+        .bar:nth-child(2) {
+            height: 35px;
+            animation-delay: 0.2s;
+        }
+
+        .bar:nth-child(3) {
+            height: 25px;
+            animation-delay: 0.3s;
+        }
+
+        .bar:nth-child(4) {
+            height: 42px;
+            animation-delay: 0.4s;
+        }
+
+        .bar:nth-child(5) {
+            height: 30px;
+            animation-delay: 0.5s;
+        }
+
+        .bar:nth-child(6) {
+            height: 40px;
+            animation-delay: 0.6s;
+        }
+
+        .bar:nth-child(7) {
+            height: 22px;
+            animation-delay: 0.7s;
+        }
+
+        @keyframes music {
+            0%, 100% {
+                transform: scaleY(0.5);
+            }
+
+            50% {
+                transform: scaleY(1);
+            }
         }
 
         .info {
             text-align: left;
-            background: #172554;
+            background: rgba(9, 0, 20, 0.8);
             padding: 20px;
             border-radius: 15px;
             margin: 25px 0;
+            border: 1px solid #6b21a8;
         }
 
         .info p {
-            padding: 8px;
-            border-bottom: 1px solid #1e40af;
+            padding: 10px;
+            margin: 0;
+            border-bottom: 1px solid #3b0764;
+        }
+
+        .info p:last-child {
+            border-bottom: none;
         }
 
         .info b {
-            color: #93c5fd;
+            color: #d946ef;
         }
 
         a {
             display: inline-block;
             padding: 12px 25px;
-            background: #2563eb;
+            background: linear-gradient(135deg, #9333ea, #db2777);
             color: white;
             text-decoration: none;
             border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(219, 39, 119, 0.4);
+            transition: 0.3s;
         }
 
         a:hover {
-            background: #3b82f6;
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(217, 70, 239, 0.8);
         }
     </style>
 </head>
@@ -72,19 +154,30 @@
 
     <div class="profile">
 
-        <div class="icon">🚀</div>
+        <div class="icon">🎧</div>
 
         <h1>IDENTITAS AGUNG</h1>
 
+        <!-- Equalizer musik -->
+        <div class="equalizer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
         <div class="info">
 
-            <p><b>Nama:</b> Agung</p>
+            <p><b>🎤 Nama:</b> Agung</p>
 
-            <p><b>Kelas:</b> XII PPLG</p>
+            <p><b>🎵 Kelas:</b> XII PPLG</p>
 
-            <p><b>Jurusan:</b> PPLG</p>
+            <p><b>🎸 Jurusan:</b> PPLG</p>
 
-            <p><b>Hobi:</b> Belajar</p>
+            <p><b>🎧 Hobi:</b> Belajar</p>
 
         </div>
 
