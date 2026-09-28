@@ -3,103 +3,455 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Identitas Habieb</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        @property --angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        html {
+            background: #020617;
+        }
+
         body {
             margin: 0;
             min-height: 100vh;
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #020617, #164e63);
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 30px;
+            overflow-x: hidden;
+            background: linear-gradient(160deg, #01030f, #060220 50%, #01030f);
         }
 
+        /* ===== LATAR LUAR ANGKASA ===== */
+        .space {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Nebula yang bergerak pelan */
+        .nebula {
+            position: absolute;
+            inset: -20%;
+            background:
+                radial-gradient(ellipse 40% 35% at 20% 25%, rgba(99, 102, 241, 0.45), transparent 70%),
+                radial-gradient(ellipse 35% 40% at 80% 30%, rgba(168, 85, 247, 0.4), transparent 70%),
+                radial-gradient(ellipse 45% 30% at 55% 85%, rgba(14, 165, 233, 0.35), transparent 70%),
+                radial-gradient(ellipse 30% 25% at 10% 80%, rgba(236, 72, 153, 0.22), transparent 70%);
+            animation: nebulaDrift 40s ease-in-out infinite alternate;
+        }
+
+        @keyframes nebulaDrift {
+            from { transform: translate(-2%, -1%) scale(1); }
+            to   { transform: translate(2%, 2%) scale(1.1); }
+        }
+
+        /* Bintang (dibuat lewat JavaScript) */
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: #fff;
+            animation: twinkle var(--d, 3s) ease-in-out var(--delay, 0s) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.15; transform: scale(0.8); }
+            50%      { opacity: 1;    transform: scale(1.3); }
+        }
+
+        /* Bintang jatuh */
+        .shooting-star {
+            position: absolute;
+            width: 140px;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0), #fff);
+            filter: drop-shadow(0 0 6px #93c5fd);
+            opacity: 0;
+            transform: rotate(-35deg);
+            animation: shoot 1.3s ease-out forwards;
+        }
+
+        @keyframes shoot {
+            0%   { opacity: 0; translate: 0 0; }
+            15%  { opacity: 1; }
+            100% { opacity: 0; translate: -420px 300px; }
+        }
+
+        /* Planet dengan cincin */
+        .planet {
+            position: absolute;
+            top: 6%;
+            right: 6%;
+            width: 170px;
+            height: 170px;
+            animation: planetFloat 9s ease-in-out infinite;
+        }
+
+        .planet-body {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 28%, #e9d5ff, #a855f7 35%, #6b21a8 65%, #2e0a52);
+            box-shadow:
+                0 0 50px rgba(168, 85, 247, 0.55),
+                0 0 120px rgba(126, 34, 206, 0.35),
+                inset -25px -20px 40px rgba(0, 0, 0, 0.55);
+        }
+
+        .planet-ring {
+            position: absolute;
+            left: -35%;
+            right: -35%;
+            top: 38%;
+            height: 24%;
+            border-radius: 50%;
+            border: 5px solid rgba(196, 181, 253, 0.6);
+            transform: rotate(-18deg);
+            box-shadow: 0 0 18px rgba(167, 139, 250, 0.5);
+        }
+
+        @keyframes planetFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-16px); }
+        }
+
+        /* Bulan kecil yang mengorbit */
+        .moon-orbit {
+            position: absolute;
+            bottom: 8%;
+            left: 6%;
+            width: 120px;
+            height: 120px;
+        }
+
+        .moon {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #f1f5f9, #94a3b8 55%, #334155);
+            box-shadow: 0 0 30px rgba(148, 163, 184, 0.4), inset -12px -10px 22px rgba(0,0,0,0.5);
+            opacity: 0.9;
+        }
+
+        /* ===== KARTU PROFIL ===== */
         .profile {
-            width: 450px;
-            padding: 40px;
+            position: relative;
+            z-index: 2;
+            width: 500px;
+            padding: 45px;
             text-align: center;
-            background: #1e293b;
-            border: 2px solid #22d3ee;
-            border-radius: 25px;
-            box-shadow: 0 0 30px rgba(34,211,238,0.3);
+            border-radius: 30px;
+            border: 2px solid transparent;
+
+            /* Border bercahaya yang berputar */
+            background:
+                linear-gradient(rgba(6, 12, 36, 0.88), rgba(6, 12, 36, 0.88)) padding-box,
+                conic-gradient(from var(--angle),
+                    #6366f1, #22d3ee, #a855f7, #ec4899, #6366f1) border-box;
+            animation: spinBorder 6s linear infinite;
+
+            box-shadow:
+                0 0 35px rgba(139, 92, 246, 0.35),
+                0 0 90px rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        @keyframes spinBorder {
+            to { --angle: 360deg; }
+        }
+
+        /* Roket */
+        .icon-wrap {
+            position: relative;
+            display: inline-block;
+            animation: float 3.2s ease-in-out infinite;
         }
 
         .icon {
-            font-size: 70px;
+            font-size: 75px;
+            display: block;
+            filter:
+                drop-shadow(0 0 10px #60a5fa)
+                drop-shadow(0 0 22px #8b5cf6);
+        }
+
+        /* Api roket */
+        .icon-wrap::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            width: 14px;
+            height: 34px;
+            margin-left: -20px;
+            border-radius: 50% 50% 50% 50% / 20% 20% 80% 80%;
+            background: linear-gradient(#fde68a, #fb923c 50%, rgba(239, 68, 68, 0));
+            filter: blur(2px);
+            transform: rotate(45deg);
+            transform-origin: top center;
+            animation: flame 0.18s ease-in-out infinite alternate;
+        }
+
+        @keyframes flame {
+            from { height: 26px; opacity: 0.75; }
+            to   { height: 42px; opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50%      { transform: translateY(-14px) rotate(3deg); }
         }
 
         h1 {
-            color: #67e8f9;
+            margin: 15px 0;
+            font-size: 38px;
+            background: linear-gradient(90deg, #c4b5fd, #67e8f9, #f0abfc, #c4b5fd);
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: shine 6s linear infinite;
+            filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.6));
+        }
+
+        @keyframes shine {
+            to { background-position: 250% center; }
+        }
+
+        .subtitle {
+            color: #93c5fd;
+            letter-spacing: 4px;
+            font-size: 13px;
+            margin-bottom: 25px;
         }
 
         .info {
             text-align: left;
-            background: #0f172a;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(30, 27, 75, 0.7));
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 18px;
+            border: 1px solid rgba(99, 102, 241, 0.6);
             margin: 25px 0;
         }
 
         .info p {
-            padding: 8px;
-            border-bottom: 1px solid #334155;
+            padding: 12px;
+            margin: 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.25);
+            line-height: 1.5;
+            opacity: 0;
+            animation: reveal 0.7s ease-out forwards;
+        }
+
+        .info p:nth-child(1) { animation-delay: 0.3s; }
+        .info p:nth-child(2) { animation-delay: 0.5s; }
+        .info p:nth-child(3) { animation-delay: 0.7s; }
+        .info p:nth-child(4) { animation-delay: 0.9s; }
+
+        @keyframes reveal {
+            from { opacity: 0; transform: translateX(-18px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .info p:last-child {
+            border-bottom: none;
         }
 
         .info b {
-            color: #67e8f9;
+            color: #a5b4fc;
+        }
+
+        .quote {
+            color: #cbd5e1;
+            font-style: italic;
+            line-height: 1.7;
+            margin: 25px 0;
         }
 
         a {
             display: inline-block;
-            padding: 12px 25px;
-            background: #0891b2;
+            padding: 13px 28px;
+            background: linear-gradient(135deg, #6366f1, #9333ea);
             color: white;
             text-decoration: none;
-            border-radius: 25px;
+            border-radius: 30px;
+            border: 1px solid #a78bfa;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+            transition: 0.3s;
+            animation: pulse 2.8s ease-in-out infinite;
         }
 
-        a:hover {
-            background: #06b6d4;
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(139, 92, 246, 0.45); }
+            50%      { box-shadow: 0 0 28px rgba(139, 92, 246, 0.9), 0 0 50px rgba(34, 211, 238, 0.35); }
+        }
+
+        a:hover,
+        a:focus-visible {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #8b5cf6, 0 0 45px rgba(59, 130, 246, 0.5);
+            outline: none;
+        }
+
+        /* Responsif untuk HP */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 14px;
+            }
+
+            .profile {
+                width: 100%;
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .planet {
+                width: 100px;
+                height: 100px;
+                right: 4%;
+                top: 3%;
+            }
+
+            .moon-orbit {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        /* Hormati pengguna yang mematikan animasi */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+            }
+
+            .info p {
+                opacity: 1;
+            }
+
+            .shooting-star {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Latar luar angkasa -->
+    <div class="space" id="space" aria-hidden="true">
+        <div class="nebula"></div>
+
+        <div class="planet">
+            <div class="planet-body"></div>
+            <div class="planet-ring"></div>
+        </div>
+
+        <div class="moon-orbit">
+            <div class="moon"></div>
+        </div>
+    </div>
+
     <div class="profile">
 
-        <div class="icon">💻</div>
+        <div class="icon-wrap">
+            <div class="icon">🚀</div>
+        </div>
 
         <h1>IDENTITAS HABIEB</h1>
+
+        <div class="subtitle">
+            SPACE EXPLORER • CODER • DREAMER
+        </div>
 
         <div class="info">
 
             <p>
-                <b>Nama:</b> Habieb
+                <b>👤 Nama:</b><br>
+                Habieb
             </p>
 
             <p>
-                <b>Kelas:</b> XII RPL 2
+                <b>🎓 Kelas:</b><br>
+                XII RPL
             </p>
 
             <p>
-                <b>Jurusan:</b> Rekayasa Perangkat Lunak
+                <b>💻 Jurusan:</b><br>
+                Rekayasa Perangkat Lunak
             </p>
 
             <p>
-                <b>Hobi:</b> Coding
+                <b>🚀 Hobi:</b><br>
+                Coding
             </p>
 
         </div>
 
+        <p class="quote">
+            "Menjelajah luar angkasa mungkin membutuhkan roket,
+            tetapi menjelajah masa depan membutuhkan ilmu."
+        </p>
+
         <a href="index.html">
-            ← Kembali
+            ← Kembali ke Beranda
         </a>
 
     </div>
+
+    <script>
+        const space = document.getElementById("space");
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // Buat bintang berkelap-kelip
+        const colors = ["#ffffff", "#ffffff", "#bfdbfe", "#ddd6fe", "#fde68a"];
+        for (let i = 0; i < 140; i++) {
+            const s = document.createElement("div");
+            const size = Math.random() * 2.2 + 0.6;
+            s.className = "star";
+            s.style.width = s.style.height = size + "px";
+            s.style.left = Math.random() * 100 + "%";
+            s.style.top = Math.random() * 100 + "%";
+            s.style.background = colors[Math.floor(Math.random() * colors.length)];
+            s.style.setProperty("--d", (2 + Math.random() * 4) + "s");
+            s.style.setProperty("--delay", (Math.random() * 5) + "s");
+            if (size > 2) s.style.boxShadow = "0 0 6px currentColor, 0 0 10px rgba(255,255,255,0.6)";
+            space.appendChild(s);
+        }
+
+        // Bintang jatuh muncul acak
+        function shoot() {
+            if (reduceMotion) return;
+            const m = document.createElement("div");
+            m.className = "shooting-star";
+            m.style.left = (35 + Math.random() * 60) + "%";
+            m.style.top = (Math.random() * 40) + "%";
+            space.appendChild(m);
+            setTimeout(() => m.remove(), 1400);
+            setTimeout(shoot, 2500 + Math.random() * 4500);
+        }
+        setTimeout(shoot, 1500);
+    </script>
 
 </body>
 </html>
